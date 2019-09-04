@@ -13,12 +13,12 @@ const LoginScreen = ({ navigation }) => {
     const loginUser = () => {
 
         setShowLoading(true);
-        
+
         login(email, password)
             .then((user) => {
                 console.log(user);
                 setShowLoading(false);
-                navigation.navigate('Home');
+                navigation.navigate('App');
             })
             .catch( error => {
                 setShowLoading(false);
