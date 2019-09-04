@@ -9,6 +9,7 @@ const LoginScreen = ({ navigation }) => {
     [email, setEmail] = useState('');
     [password, setPassword] = useState('');
     [showLoading, setShowLoading] = useState(false);
+    [validationText, setValidationText] = useState('')
 
     const loginUser = () => {
 
@@ -22,13 +23,12 @@ const LoginScreen = ({ navigation }) => {
             })
             .catch( error => {
                 setShowLoading(false);
-                console.log('Login erro code', error.code);
-                console.log('Login erro message', error);                
+                setValidationText('Invalid user/password')
             })
     }
 
     return (
-        <KeyboardAvoidingView behavior="height" style={styles.container}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <Loading show={showLoading} />
             <View style={styles.logoContainer}>
                 <Text style={styles.logo} >Onion</Text>
@@ -41,6 +41,7 @@ const LoginScreen = ({ navigation }) => {
                     onChangePassword={(passwordText) => setPassword(passwordText)}
                     onSubmit={loginUser}
                     onSignUp={() => { navigation.navigate('SignUp') }}
+                    validationText={validationText}
                 />
             </View>
         </KeyboardAvoidingView>
@@ -50,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1E6396',
+        backgroundColor: '#6CCCFC',
     },
     logoContainer: {
         alignItems: 'center',
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
         color: '#FFF'
     },
     formContainer: {
-        flex: 4,
+        flex: 4
     }
 })
 

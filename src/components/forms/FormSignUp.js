@@ -1,11 +1,23 @@
 import React from 'react'
 import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const LoginForm = ({ onSubmit, onSignUp, email, onChangeEmail, password, onChangePassword, validationText }) => {
+const LoginForm = ({ onSubmit, name, onChangeName, email, onChangeEmail, password, onChangePassword, validationText }) => {
 
     return (
         <View style={styles.container}>
             {validationText ? <Text style={styles.validationTextStyle}>{validationText}</Text> : null}
+            <TextInput
+                placeholder="Name"
+                placeholderTextColor="#000"
+                returnKeyType="next"
+                autoCorrect={false}
+                onSubmitEditing={() => emailInput.focus()}
+                style={styles.input}
+                value={name}
+                onChangeText={onChangeName}
+
+            />
+
             <TextInput
                 placeholder="E-mail"
                 placeholderTextColor="#000"
@@ -13,7 +25,8 @@ const LoginForm = ({ onSubmit, onSignUp, email, onChangeEmail, password, onChang
                 keyboardType='email-address'
                 autoCapitalize='none'
                 autoCorrect={false}
-                onSubmitEditing={() => this.passwordInput.focus()}
+                onSubmitEditing={() => passwordInput.focus()}
+                ref={(input) => emailInput = input}
                 style={styles.input}
                 value={email}
                 onChangeText={onChangeEmail}
@@ -25,17 +38,13 @@ const LoginForm = ({ onSubmit, onSignUp, email, onChangeEmail, password, onChang
                 returnKeyType="go"
                 secureTextEntry
                 style={styles.input}
-                ref={(input) => this.passwordInput = input}
+                ref={(input) => passwordInput = input}
                 value={password}
                 onChangeText={onChangePassword}
             />
             <TouchableOpacity style={styles.buttonContainer} onPress={onSubmit} >
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonSignUpStyle} onPress={onSignUp}>
                 <Text style={styles.buttonText}>Sign up</Text>
             </TouchableOpacity>
-
         </View>
     )
 }
@@ -47,7 +56,7 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        backgroundColor: '#fff', //'rgba(255, 255, 255, 0.2)',
+        backgroundColor: '#fff',
         marginBottom: 10,
         color: '#000',
         paddingHorizontal: 10,
