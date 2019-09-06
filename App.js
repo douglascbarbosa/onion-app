@@ -61,16 +61,31 @@ const AppStack = createBottomTabNavigator(
     Home: {
       screen: HomeStack,
       navigationOptions: {
-        tabBarLabel:"Dashboard",
+        tabBarLabel: "Dashboard",
         tabBarIcon: ({ tintColor }) => {
-          return <Icon name="home" size={20} color={tintColor}/>
+          return <Icon name="bar-chart" size={20} color={tintColor} />
         }
-          
-        
       }
     },
-    Entries: EntriesStack,
-    Settings: SettingsStack
+    Entries: {
+      screen: EntriesStack,
+      navigationOptions: {
+        tabBarLabel: "Entries",
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="list" size={20} color={tintColor} />
+        }
+      }
+
+    },
+    Settings: {
+      screen: SettingsStack,
+      navigationOptions: {
+        tabBarLabel: "Settings",
+        tabBarIcon: ({ tintColor }) => {
+          return <Icon name="cogs" size={20} color={tintColor} />
+        }
+      }
+    }
   },
   // {
   //   navigationOptions: ({ navigation }) => ({
