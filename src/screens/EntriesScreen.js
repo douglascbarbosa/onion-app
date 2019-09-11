@@ -1,89 +1,36 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import EntriesList from '../components/Entries/EntriesList';
-import { format } from 'date-fns'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Context as OnionContext } from '../context/OnionContex';
 
 
 
 const EntriesScreen = () => {
+    const { state } = useContext(OnionContext);
 
-    const entries = [
-        {
-            id: 1,
-            title: 'Energy',
-            category: 'Fixed expenses',
-            date: format(new Date(), 'yyyy/MM/dd'),
-            status: 'overdue',
-            expense: true,
-            amount: 18050
-        },
-        {
-            id: 2,
-            title: 'Credit card',
-            category: 'Variable expense',
-            date: format(new Date(), 'yyyy/MM/dd'),
-            installments: 5,
-            currentInstallment: 2,
-            status: 'payed',
-            paymentDate: format(new Date(), 'yyyy/MM/dd'),
-            expense: true,
-            amount: 150000
-        },
-        {
-            id: 3,
-            title: 'Energia',
-            category: 'Fixed expenses',
-            date: format(new Date(), 'yyyy/MM/dd'),
-            status: 'planned',
-            expense: true,
-            amount: 18000
-        },
-        {
-            id: 4,
-            title: 'Selic',
-            category: 'Investment',
-            date: format(new Date(), 'yyyy/MM/dd'),
-            paymentDate: format(new Date(), 'yyyy/MM/dd'),
-            status: 'payed',
-            expense: true,
-            amount: 20000
-        },
-        {
-            id: 5,
-            title: 'Wage',
-            category: 'Income',
-            date: format(new Date(), 'yyyy/MM/dd'),
-            paymentDate: format(new Date(), 'yyyy/MM/dd'),
-            status: 'payed',
-            expense: false,
-            amount: 200000
-        }
-
-    ]
-
-    const getTotal = (entries) =>  {
+    const getTotal = (entries) => {
         let expense = 0;
         let income = 0;
 
-        entries.forEach((entry) => { 
+        entries.forEach((entry) => {
             if (entry.expense) {
                 expense += entry.amount;
             } else {
                 income += entry.amount;
             }
-         })
+        })
 
-         return income - expense;
+        return income - expense;
     }
-    
-    const incomes = entries.filter(entry => entry.category === 'Income');
-    const investiments = entries.filter(entry => entry.category === 'Investment');
 
-    const fixedExpenses = entries.filter(entry => entry.category === 'Fixed expenses');
-    const variableExpenses = entries.filter(entry => entry.category === 'Variable expense');
+    const incomes = state.filter(entry => entry.category === 'Income');
+    const investiments = state.filter(entry => entry.category === 'Investment');
 
-    const balance = getTotal(entries);
+    const fixedExpenses = state.filter(entry => entry.category === 'Fixed expenses');
+    const variableExpenses = state.filter(entry => entry.category === 'Variable expense');
+
+    const balance = getTotal(state);
 
     return (
         <View style={styles.container}>
@@ -100,7 +47,7 @@ const EntriesScreen = () => {
             </ScrollView>
             <View style={styles.summaryContainer}>
                 <Text style={styles.totalText}>Balance</Text>
-                <Text style={{...styles.totalText, color: balance < 0 ? '#C13C54' : '#343F4B' }}>R$ {parseFloat(balance / 100).toFixed(2)}</Text>
+                <Text style={{ ...styles.totalText, color: balance < 0 ? '#C13C54' : '#343F4B' }}>R$ {parseFloat(balance / 100).toFixed(2)}</Text>
             </View>
         </View>
 
@@ -112,7 +59,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
-        // backgroundColor: '#F4F7F8'
     },
     dateContainer: {
         paddingVertical: 15,
@@ -141,9 +87,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#343F4B',
         fontWeight: 'bold',
-        
+
     },
 
 })
+
+
+EntriesScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: (
+            <TouchableOpacity onPress={() => navigation.navigate('CreateEntry')}>
+                <Icon name="plus" style={{marginRight: 10}} size={25} color='#000' />
+            </TouchableOpacity>
+        )
+    }
+}
 
 export default EntriesScreen;

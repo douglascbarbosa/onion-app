@@ -2,14 +2,18 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Provider as OnionProvider } from './src/context/OnionContex';
 
 import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
-import EntriesScreen from './src/screens/EntriesScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
+
+import EntriesScreen from './src/screens/EntriesScreen';
+import ShowEntryScreen from './src/screens/ShowEntryScreen';
+import CreateEntryScreen from './src/screens/CreateEntryScreen';
 
 const AuthStack = createStackNavigator(
   {
@@ -26,7 +30,9 @@ const AuthStack = createStackNavigator(
 const EntriesStack = createStackNavigator(
   {
     EntryList: EntriesScreen,
+    CreateEntry: CreateEntryScreen,
     Registration: RegistrationScreen,
+    ShowEntry: ShowEntryScreen
   },
   {
     initialRouteName: 'EntryList',
@@ -126,4 +132,8 @@ const App = createAppContainer(
   )
 );
 
-export default App;
+export default () => {
+  return <OnionProvider>
+    <App />
+  </OnionProvider>
+};

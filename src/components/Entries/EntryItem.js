@@ -1,8 +1,11 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Context } from '../../context/OnionContex';
 
 const EntryItem = ({ entry }) => {
+    const { deleteEntry } = useContext(Context);
+
     return (
         <View style={{ ...styles.container, backgroundColor: getbackgroundColor(entry) }}>
             <View style={styles.checkConteiner}>
@@ -20,6 +23,16 @@ const EntryItem = ({ entry }) => {
                     <Text style={styles.text}>{entry.installments ? entry.installments + ' of ' + entry.currentInstallment : null}</Text>
                 </View>
             </View>
+            <View style={styles.optionsContainer}>
+                <TouchableOpacity>
+                    <Icon name='edit' size={25} />
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { deleteEntry(entry.id) }} >
+                    <Icon name='trash-o' size={25} />
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 }
@@ -72,6 +85,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginTop: 5,
         flexGrow: 5
+    },
+    optionsContainer: {
+        padding: 5,
+        justifyContent: 'space-between'
     }
 })
 

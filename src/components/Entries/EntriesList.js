@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native'
+import { View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { withNavigation } from 'react-navigation';
 import EntryItem from './EntryItem';
 
-const EntriesList = ({ title, data, totalAmount }) => {
+const EntriesList = ({ title, data, totalAmount, navigation }) => {
     return (
         <View>
             <Text style={styles.title}>{title}</Text>
@@ -10,13 +11,17 @@ const EntriesList = ({ title, data, totalAmount }) => {
                 data={data}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => {
-                    return <EntryItem entry={item} />
+                    return (
+                        <TouchableOpacity onPress={() => navigation.navigate('ShowEntry', { id: item.id })}>
+                            <EntryItem entry={item} />
+                        </TouchableOpacity>
+                    )
                 }}
                 style={styles.list}
             />
             <View style={styles.totalContainer}>
                 <Text style={styles.totalText}>Total</Text>
-                <Text style={{...styles.totalText, color: totalAmount < 0 ? '#C13C54' : '#343F4B' }}>R$ {parseFloat(totalAmount / 100).toFixed(2)}</Text>
+                <Text style={{ ...styles.totalText, color: totalAmount < 0 ? '#C13C54' : '#343F4B' }}>R$ {parseFloat(totalAmount / 100).toFixed(2)}</Text>
             </View>
         </View>
     )
@@ -44,15 +49,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 10,
-        backgroundColor: '#fff' 
+        backgroundColor: '#fff'
     },
     totalText: {
         fontSize: 16,
         color: '#343F4B',
         fontWeight: 'bold'
     },
-  
+
 
 })
 
-export default EntriesList;
+export default withNavigation(EntriesList);
