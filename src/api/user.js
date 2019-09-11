@@ -10,3 +10,7 @@ export const registerUser = (user) => {
 
     return firebase.database().ref(`users/${user.uid}`).set(user);
 };
+
+export const loadUserInfo = async (uid) => {
+    return firebase.database().ref(`/users/${uid}`).once('value');
+}

@@ -2,8 +2,12 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Provider as OnionProvider } from './src/context/OnionContex';
 
+// Providers
+import { Provider as OnionProvider } from './src/context/OnionContex';
+import { Provider as UserProvider } from './src/context/UserContext';
+
+// Screens 
 import AuthLoadingScreen from './src/screens/AuthLoadingScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import RegistrationScreen from './src/screens/RegistrationScreen';
@@ -133,7 +137,11 @@ const App = createAppContainer(
 );
 
 export default () => {
-  return <OnionProvider>
-    <App />
-  </OnionProvider>
+  return (
+    <UserProvider>
+      <OnionProvider>
+        <App />
+      </OnionProvider>
+    </UserProvider>
+  )
 };

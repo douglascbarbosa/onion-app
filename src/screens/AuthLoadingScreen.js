@@ -1,49 +1,43 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet
 } from 'react-native';
 import firebase from 'react-native-firebase';
+import { Context as UserContext } from '../context/UserContext';
+import { loadUserInfo } from '../api/user';
+
+const AuthLoadingScreen = ({ navigation }) => {
+
+  const { addUserSession } = useContext(UserContext);
+
+  useEffect(() => {
+
+    setTimeout(
+      () => {
+        firebase.auth().onAuthStateChanged(async (user) => {
+          
+          if (user) {
+            const userInfo = await loadUserInfo(user._user.uid);
+            addUserSession({ ...userInfo._value });
+            navigation.navigate('App');
+          } else {
+            navigation.navigate('Auth');
+          }
+        });
+      },
+      2000
+    )
 
 
+  }, [])
 
-class AuthLoadingScreen extends React.Component {
-
-  async componentDidMount() {
-    // this._bootstrapAsync();
-    const loadInfo = await this._bootstrapAsync();
-  } 
-
-  _bootstrapAsync = async () => {
-
-    return new Promise((resolve) =>
-      setTimeout(
-        () => {
-
-          firebase.auth().onAuthStateChanged((user) => {
-            console.log(user);
-            resolve('result');
-            if (user) {
-              this.props.navigation.navigate('App');
-            } else {
-              this.props.navigation.navigate('Auth');
-            }
-          });
-        },
-        2000
-      )
-    );
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.textStyle}>Onion</Text>
-      </View>
-    );
-  }
-
+  return (
+    <View style={styles.container}>
+      <Text style={styles.textStyle}>Onion</Text>
+    </View>
+  )
 
 }
 

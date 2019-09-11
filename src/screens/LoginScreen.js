@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, StyleSheet, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import LoginForm from '../components/forms/LoginForm';
 import { login } from '../api/auth';
 import Loading from '../components/layout/Loading';
+import { Context as UserContext } from '../context/UserContext';
 
 const LoginScreen = ({ navigation }) => {
+
+    const { addUserSession } = useContext(UserContext);
 
     [email, setEmail] = useState('');
     [password, setPassword] = useState('');
