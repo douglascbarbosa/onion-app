@@ -1,5 +1,7 @@
 import { format } from 'date-fns'
 import createDataContext from './createDataContext';
+import { newEntry } from '../api/entry';
+
 
 export const ADD_ENTRY = 'add_entry';
 export const EDIT_ENTRY = 'edit_entry';
@@ -17,11 +19,20 @@ const OnionReducer = (state, action) => {
 }
 
 
-// const addEntry = dispatch => {
-//     return () => {
-//         dispatch({ type: 'add_entry', payload})
-//     }
-// }
+
+
+const addEntry = dispatch => {
+    return async (payload, uid) => {
+
+        try {
+            const newEntryInfo = await newEntry(payload, uid);
+            dispatch({type: ADD_ENTRY, payload: {id: newEntryInfo.key, ...payload}});
+
+        }catch(error) {
+            console.log('error', error);
+        }
+    }
+}
 
 const deleteEntry = dispatch => {
     return (id) => {
@@ -84,4 +95,4 @@ const entriesDemo = [
 ];
 
 
-export const { Context, Provider } = createDataContext(OnionReducer, {deleteEntry}, entriesDemo);
+export const { Context, Provider } = createDataContext(OnionReducer, {addEntry, deleteEntry}, entriesDemo);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import TextInput from '../Inputs/TextInput';
 import Picker from '../Inputs/Picker';
@@ -28,37 +28,57 @@ const statusOptions =
     ]
 
 
-const EntryForm = () => {
+const EntryForm = ({ onSubmit }) => {
+
+    const [title, setTitle] = useState('');
+    const [amount, setAmount] = useState('');
+    const [category, setCategory] = useState(CATEGORY_EXPENSE_FIXED);
+    const [date, setDate] = useState('');
+    const [instalments, setInstalments] = useState('')
+    const [status, setStatus] = useState(STATUS_PLANNED);
 
     return (
         <ScrollView>
             <TextInput
                 label="Title"
+                value={title}
+                onChangeText={(text) => setTitle(text)}
             />
 
             <TextInput
                 label="Amount"
+                value={amount}
+                onChangeText={(text) => setAmount(text)}
             />
 
             <Picker
                 label="Category"
                 options={categoryOptions}
+                selectedValue={category}
+                onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
             />
 
             <TextInput
                 label="Date"
+                value={date}
+                onChangeText={(text) => setDate(text)}
             />
 
             <TextInput
                 label="Instalments"
+                value={instalments}
+                onChangeText={(text) => setInstalments(text)}
             />
 
             <Picker
                 label="Status"
                 options={statusOptions}
+                selectedValue={status}
+                onValueChange={(itemValue, itemIndex) => setStatus(itemValue)}
+
             />
 
-            <TouchableOpacity style={styles.buttonContainer} >
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => { onSubmit({title, amount, category, date, instalments, status})} } >
                 <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
 

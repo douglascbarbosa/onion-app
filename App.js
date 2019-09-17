@@ -97,30 +97,6 @@ const AppStack = createBottomTabNavigator(
       }
     }
   },
-  // {
-  //   navigationOptions: ({ navigation }) => ({
-  //     tabBarIcon: ({ focused, horizontal, tintColor }) => {
-  //       const { routeName } = navigation.state;
-  //       // let IconComponent = Ionicons;
-  //       let iconName = 'comments';
-  //       if (routeName === 'Home') {
-  //         iconName = 'home';
-  //         // Sometimes we want to add badges to some icons.
-  //         // You can check the implementation below.
-  //         // IconComponent = HomeIconWithBadge;
-  //       } else if (routeName === 'Settings') {
-  //         iconName = 'comments';
-  //       }
-
-  //       // You can return any component that you like here!
-  //       return <Icon name={iconName} size={25} color={tintColor} />
-  //     },
-  //   }),
-  //   tabBarOptions: {
-  //     activeTintColor: 'tomato',
-  //     inactiveTintColor: 'gray',
-  //   },
-  // }  
 );
 
 const App = createAppContainer(

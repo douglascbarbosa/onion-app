@@ -15,9 +15,8 @@ const Picker = (props) => {
             <View style={styles.picker}>
                 <NativePicker
                     style={{ color: 'rgba(0,0,0, 0.4)' }}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({ language: itemValue })
-                    }>
+                    {...props}
+                >
 
                     {props.options ? renderOptions(props.options) : null}
 

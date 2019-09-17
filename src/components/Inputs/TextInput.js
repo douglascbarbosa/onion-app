@@ -10,6 +10,7 @@ const TextInput = (props) => {
             <Input
                 underlineColorAndroid='rgba(0,0,0,0)'
                 style={styles.input}
+                {...props}
             />
         </View>
     );
